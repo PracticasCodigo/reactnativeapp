@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import type {Node} from 'react';
 import {
   SafeAreaView,
@@ -27,34 +27,42 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-
-
 const Mensaje = props => {
   return (
-      <View>
-        <Text>{props.str}</Text>
-      </View>
-    );
+    <View>
+      <Text>{props.str}</Text>
+    </View>
+  );
 };
 
 const App: () => Node = () => {
   const [count, setCount] = useState(0);
+
+  // este use Effect se va a ejecutar solamente cuando se inicie el sistema
+  useEffect(() => {
+    console.log('inicia el sistema');
+  }, []);
+
+  // este use Effect se va a ejecutar solamebte cuando cambie el valor de count
+  useEffect(() => {
+    console.log(`el valor de Count es : ${count}`);
+  }, [count]);
+
   return (
     <SafeAreaView>
       <ScrollView>
         <Mensaje />
         <Button
-            onPress={() => {
-                setCount(count + 1);
-            }}
-            color = "#841584"
-            title={"count: " + count } 
+          onPress={() => {
+            setCount(count + 1);
+          }}
+          color="#841584"
+          title={'count: ' + count}
         />
       </ScrollView>
     </SafeAreaView>
   );
 };
-
 
 const styles = StyleSheet.create({
   sectionContainer: {
